@@ -19,7 +19,7 @@ class Registry
             }
         }
         if($html == ""){
-            return "no se han encontrado mensaje para este usuario.";
+            return "<span class'error'>no se han encontrado mensaje para este usuario.</span>";
         }else{
             return $html;
         }

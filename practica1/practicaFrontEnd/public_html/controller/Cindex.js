@@ -24,24 +24,32 @@ function comparator(event) {
       if (text.length == 4) {
         send(text[1], text[2], text[3]);
       } else {
-        var response = document.createElement("p");
-        response.innerHTML = "le faltan argumentos a este comando.";
-        consoleLog.appendChild(response);
+        addConsole("----------------------------------------------------------------------------------------------------------------------------------");
+        addConsole("missing arguments to this command.");
+        addConsole("if you want to know more, enter the help command.");
+        clearInput();
       }
     } else if (text[0] == "list" || text[0] == "List") {
       if (text.length == 2) {
         list(text[1]);
       } else {
-        var response1 = document.createElement("p");
-        response1.innerHTML = "le faltan argumentos a este comando.";
-        consoleLog.appendChild(response1);
+        addConsole("----------------------------------------------------------------------------------------------------------------------------------");
+        addConsole("missing arguments to this command.");
+        addConsole("if you want to know more, enter the help command.");
+        clearInput();
       }
     } else if (text[0] == "clear") {
       clear();
-    } else {
-      var response2 = document.createElement("p");
-      response2.innerHTML = text[0] + " no es un arguemto valido";
-      consoleLog.appendChild(response2);
+      clearInput();
+    }else if(text[0] == "help"){
+      addConsole("----------------------------------------------------------------------------------------------------------------------------------");
+      addConsole("command: register [transmitter] [receiver] [message] Record a message.");
+      addConsole("command: list [transmitter] List all messages sent by the transmitter.");
+      clearInput();
+    }
+     else {
+      addConsole("----------------------------------------------------------------------------------------------------------------------------------");
+      addConsole(text[0] + " is not a valid command");
     }
   }
 }
@@ -54,15 +62,20 @@ function list(dir) {
   var xhttp = new XMLHttpRequest();
   xhttp.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      var response = document.createElement("p");
-      response.innerHTML = this.responseText;
-      consoleLog.appendChild(response);
+      addConsole(this.responseText);
       clearInput();
     }
   };
   xhttp.open("GET", "../../../practicaBackEnd/controller/Cindex.php?dir=" + dir, true);
   xhttp.send();
 }
+
 function clearInput() {
   textConsole.value = "";
+}
+
+function addConsole(string) {
+  var response = document.createElement("p");
+  response.innerHTML = string;
+  consoleLog.appendChild(response);
 }
